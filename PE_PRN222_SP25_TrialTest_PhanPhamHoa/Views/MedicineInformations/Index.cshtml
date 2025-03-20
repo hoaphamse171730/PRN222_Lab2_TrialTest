@@ -1,0 +1,79 @@
+﻿@model Business_Logic.Utils.PagedResult<Data_Access.Entities.MedicineInformation>
+
+@{
+    ViewData["Title"] = "Index";
+    var createObject = new Data_Access.Entities.MedicineInformation();
+
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => createObject.MedicineName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => createObject.ActiveIngredients)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => createObject.ExpirationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => createObject.DosageForm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => createObject.WarningsAndPrecautions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => createObject.Manufacturer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Items) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MedicineName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActiveIngredients)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpirationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DosageForm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WarningsAndPrecautions)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Manufacturer.ManufacturerName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MedicineId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MedicineId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MedicineId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    @if (Model.CurrentPage > 1)
+    {
+        <a href="@Url.Action("Index", new { pageNumber = Model.CurrentPage - 1, pageSize = Model.PageSize })">Previous</a>
+    }
+    <span>Page @Model.CurrentPage of @Model.TotalPages</span>
+    @if (Model.CurrentPage < Model.TotalPages)
+    {
+        <a href="@Url.Action("Index", new { pageNumber = Model.CurrentPage + 1, pageSize = Model.PageSize })">Next</a>
+    }
+</div>
